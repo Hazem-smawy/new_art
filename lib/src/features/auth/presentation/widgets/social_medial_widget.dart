@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/auth_social_media_item_widget.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/login_widget.dart';
+import 'package:newart/src/features/auth/presentation/widgets/auth_social_media_item_widget.dart';
 
 class SocialMedialWidget extends StatelessWidget {
   const SocialMedialWidget({

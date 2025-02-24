@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:new_art/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
 
 class ArtistItemWidget extends StatelessWidget {
   final String image;

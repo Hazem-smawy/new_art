@@ -3,15 +3,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/helpers/validation.dart';
-import 'package:new_art/src/features/auth/presentation/getX/auth_controller.dart';
-import 'package:new_art/src/features/auth/presentation/pages/recover_password_page.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/auth_back_btn_widget.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/auth_text_fieldwidget.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/social_medial_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/helpers/validation.dart';
+import 'package:newart/src/features/auth/presentation/getX/auth_controller.dart';
+import 'package:newart/src/features/auth/presentation/pages/recover_password_page.dart';
+import 'package:newart/src/features/auth/presentation/widgets/auth_back_btn_widget.dart';
+import 'package:newart/src/features/auth/presentation/widgets/auth_text_fieldwidget.dart';
+import 'package:newart/src/features/auth/presentation/widgets/login_with_google_widget.dart';
+import 'package:newart/src/features/auth/presentation/widgets/social_medial_widget.dart';
 
 class LoginWidget extends StatelessWidget {
   final VoidCallback onClickedSignUp;
@@ -29,7 +29,7 @@ class LoginWidget extends StatelessWidget {
               Form(
                 key: authController.loginFormKey,
                 child: Container(
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.all(20),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -50,22 +50,27 @@ class LoginWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Text("تسجيل الدخول", style: context.titleLarge),
+                        Text(
+                          "تسجيل الدخول",
+                          style: context.displayMedium,
+                        ),
                         context.g28,
                         AuthTextFieldwidget(
                           controller: authController.emailController,
-                          icon: FontAwesomeIcons.envelope,
+                          icon: Icons.email_outlined,
                           hint: 'البريد الإلكتروني',
+                          type: TextInputType.emailAddress,
                           validator: (value) =>
-                              validInput(value ?? '', 2, 20, 'email'),
+                              validInput(value ?? '', 2, 30, 'email'),
                         ),
                         context.g12,
                         AuthTextFieldwidget(
                           controller: authController.passwordController,
-                          icon: FontAwesomeIcons.lock,
+                          icon: Icons.lock_outline,
+                          isPassword: true,
                           hint: 'كلمة السر',
                           validator: (value) =>
-                              validInput(value ?? '', 2, 20, 'password'),
+                              validInput(value ?? '', 2, 30, 'password'),
                         ),
                         context.g12,
                         Row(
@@ -74,7 +79,9 @@ class LoginWidget extends StatelessWidget {
                             GestureDetector(
                               child: Text(
                                 "نسيت كلمة المرور ",
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: context.bodyMedium.copyWith(
+                                  color: context.blackColor,
+                                ),
                               ),
                               onTap: () {
                                 Get.to(() => const ForgotPasswordPage());
@@ -91,12 +98,12 @@ class LoginWidget extends StatelessWidget {
                         CustomBtnWithIconWidget(
                           title: 'تسجيل الدخول',
                           action: () {
-                            authController.login();
+                            authController.login(context);
                           },
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        context.g12,
+                        LoginWithGoogleWidget(),
+                        context.g16,
                         RichText(
                           textDirection: TextDirection.rtl,
                           text: TextSpan(
@@ -107,11 +114,13 @@ class LoginWidget extends StatelessWidget {
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = onClickedSignUp,
                                   text: 'انشاء حساب',
-                                  style: Theme.of(context).textTheme.bodyLarge)
+                                  style: context.bodyLarge.copyWith(
+                                    color: context.blackColor,
+                                  ))
                             ],
                           ),
                         ),
-                        context.g28,
+                        context.g20,
                         SocialMedialWidget(),
                         const SizedBox(
                           height: 20,
@@ -129,7 +138,7 @@ class LoginWidget extends StatelessWidget {
     );
   }
 
-  Future SignIn() async {
+  Future signIn() async {
     //dialog
     // try {
     //   await FirebaseAuth.instance.signInWithEmailAndPassword(

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
 
 class OrderTypeWidget extends StatelessWidget {
   const OrderTypeWidget({
     super.key,
-    required this.type,
+    required this.status,
+    required this.color,
   });
 
-  final int type;
+  final Color color;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +19,12 @@ class OrderTypeWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: type == 2
-              ? context.secondary.withAlpha(20)
-              : Colors.green.withAlpha(20),
+          color: color.withAlpha(20),
         ),
         child: Text(
-          type == 2 ? 'ملغي' : 'تم بنجاح',
+          status,
           style: context.bodySmall.copyWith(
-            color: type == 2 ? context.secondary : Colors.green,
+            color: color,
           ),
         ),
       ),

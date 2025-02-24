@@ -1,7 +1,7 @@
-library text_style;
+library;
 
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/constants/colors.dart';
+import 'package:newart/src/core/constants/colors.dart';
 
 //
 class AppTextStyle {

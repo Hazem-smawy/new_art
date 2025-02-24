@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
 
 class SlideBarItemWidget extends StatelessWidget {
   final String title;

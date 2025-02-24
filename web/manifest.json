@@ -1,6 +1,6 @@
 {
-    "name": "new_art",
-    "short_name": "new_art",
+    "name": "newart",
+    "short_name": "newart",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

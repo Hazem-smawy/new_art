@@ -1,6 +1,6 @@
-import 'package:new_art/src/core/constants/colors.dart';
-import 'package:new_art/src/core/constants/text_style.dart';
-import 'package:new_art/src/core/widgets/thin_divider_widget.dart';
+import 'package:newart/src/core/constants/colors.dart';
+import 'package:newart/src/core/constants/text_style.dart';
+import 'package:newart/src/core/widgets/thin_divider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -35,6 +35,29 @@ class CustomDialog {
   //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
   //     borderRadius: 12,
   //   );
+  static void sheetLoading() {
+    Get.bottomSheet(Container(
+      height: 60,
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: AppColors.containerColor.withAlpha(150),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: CircularProgressIndicator(
+              backgroundColor: AppColors.primaryColor,
+              color: AppColors.blackColor,
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
   static void showDialog({title, description, icon, color, action}) {
     Get.defaultDialog(
       title: "",
@@ -127,12 +150,13 @@ class CustomDialog {
     );
   }
 
-  static void customSnackBar(
-      description, SnackPosition? snackPosition, bool? isError) {
-    if (Get.isSnackbarOpen) {
-      Get.closeCurrentSnackbar();
-      return;
-    }
+  static void customSnackBar(description,
+      [SnackPosition? snackPosition = SnackPosition.TOP,
+      bool? isError = false]) {
+    // if (Get.isSnackbarOpen) {
+    //   Get.closeCurrentSnackbar();
+    //   return;
+    // }
     Get.rawSnackbar(
       borderColor: AppColors.secondaryColor.withAlpha(50),
       backgroundColor: AppColors.whiteColor,
@@ -144,12 +168,8 @@ class CustomDialog {
             child: Text(
               description,
               textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontFamily: "Cairo",
-                color: AppColors.blackColor,
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-              ),
+              style: AppTextStyle.bodyLarge,
+              textDirection: TextDirection.rtl,
             ),
           ),
           const SizedBox(

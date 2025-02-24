@@ -1,6 +1,6 @@
-import 'package:new_art/src/core/error/error_string.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/utils/dialogs.dart';
+import 'package:newart/src/core/error/error_string.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

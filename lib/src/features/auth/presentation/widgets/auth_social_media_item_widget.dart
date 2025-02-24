@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
 
 class AuthSocialMediaItemWidget extends StatelessWidget {
   final IconData icon;
@@ -20,9 +19,9 @@ class AuthSocialMediaItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         // shape: BoxShape.circle,
-        border: Border.all(
-          color: context.secondaryTextColor.withAlpha(50),
-        ),
+        // border: Border.all(
+        //   color: context.secondaryTextColor.withAlpha(50),
+        // ),
       ),
       child: Center(
         child: FaIcon(

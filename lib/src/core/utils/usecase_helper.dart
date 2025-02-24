@@ -15,7 +15,7 @@ Future<void> handleUsecase<T>({
   result.fold(
     (failure) {
       if (errorMessageTarget != null) {
-        errorMessageTarget.value = failure.message;
+        errorMessageTarget.value = failure.message ?? 'UnKnown failure';
       }
     },
     (data) {

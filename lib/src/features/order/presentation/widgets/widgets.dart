@@ -140,8 +140,8 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
 
 class StepData {
   final String name;

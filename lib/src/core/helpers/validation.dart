@@ -1,47 +1,5 @@
 import 'package:get/get.dart';
 
-// validInput(String val, int min, int max, String type) {
-//   if (type == "username") {
-//     if (!GetUtils.isUsername(val)) {
-//       return "not valid username";
-//     }
-//   }
-//   if (type == "firstName") {
-//     if (!GetUtils.isUsername(val)) {
-//       return "not valid firstName";
-//     }
-//   }
-//   if (type == "lastName") {
-//     if (!GetUtils.isUsername(val)) {
-//       return "not valid lastName";
-//     }
-//   }
-//   if (type == "email") {
-//     if (!GetUtils.isEmail(val)) {
-//       return "not valid email";
-//     }
-//   }
-
-//   if (type == "phone") {
-//     if (!GetUtils.isPhoneNumber(val)) {
-//       return "not valid phone";
-//     }
-//   }
-
-//   if (val.isEmpty) {
-//     return "يجب ان لايكون فارغ";
-//   }
-
-//   if (val.length < min) {
-//     return "can't be less than $min";
-//   }
-
-//   if (val.length > max) {
-//     return "can't be larger than $max";
-//   }
-// }
-import 'package:get/get.dart';
-
 String? validInput(String val, int min, int max, String type) {
   // Check for empty input
   if (val.isEmpty) {
@@ -61,18 +19,24 @@ String? validInput(String val, int min, int max, String type) {
     case "username":
     case "firstName":
     case "lastName":
-      if (!GetUtils.isUsername(val)) {
+      if (!GetUtils.isTxt(val)) {
         return "not valid $type";
       }
       break;
     case "email":
       if (!GetUtils.isEmail(val)) {
-        return "not valid email";
+        return 'قم بأدخال بريد الالكتروني صحيح';
       }
       break;
     case "phone":
       if (!GetUtils.isPhoneNumber(val)) {
-        return "not valid phone";
+        return 'قم بإدخال الرقم بشكل صحيح';
+      }
+      break;
+
+    case "password":
+      if (false) {
+        return 'اجعل كلمة المرور اكثر صعوبة';
       }
       break;
     default:
@@ -80,5 +44,49 @@ String? validInput(String val, int min, int max, String type) {
   }
 
   // Input is valid
+  return null;
+}
+
+String? validateUrl(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'ادخل رابط الطلب';
+  }
+
+  final uri = Uri.tryParse(value);
+  if (uri == null ||
+      // Ensure the URI has a valid scheme (http or https)
+      (uri.scheme != 'http' && uri.scheme != 'https') ||
+      // Optionally, ensure the URL has a valid host
+      uri.host.isEmpty) {
+    return 'يجب ان يكون الرابط صحيح';
+  }
+
+  return null; // URL is valid
+}
+
+String? validateNotEmpty(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return "يجب ان لايكون فارغ";
+  }
+  return null;
+}
+
+String? validateNum(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return "يجب ان لايكون فارغ";
+  }
+  if (!GetUtils.isNum(value)) {
+    return "يجب ان لا يكون نص";
+  }
+  return null;
+}
+
+String? validatePhone(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return "يجب ان لايكون فارغ";
+  }
+  if (!GetUtils.isPhoneNumber(value)) {
+    return 'قم بإدخال الرقم بشكل صحيح';
+  }
   return null;
 }

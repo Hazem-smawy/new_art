@@ -7,13 +7,12 @@ abstract class Routes {
   static const AUTH = '/auth';
   static const MAIN = '/main';
   static const ADD_ORDER = '/add_order';
-  static const ALL_ORDER = '/all_order';
   static const SHOPPING_CART = '/shopping_cart';
 
-  static const BANK_ACCOUNTS = '/bank_account';
+  static const ALL_PAYMENTS = '/all_payments';
 
   static const BOTTOMNAVIGATIONBAR = '/bottom_navigation';
-  static const NEW_WORK_PAGE = '/new_work_page';
+  static const PRODUCTS = '/new_work_page';
   static const ALL_ARTISTS = '/all_artists';
   static const USER = '/user';
   static const POINTS = '/points';
@@ -22,4 +21,7 @@ abstract class Routes {
   static const TRACK_ORDER = '/track_order';
   static const POINTS_STATICS = '/points_statics';
   static const BUNCH = '/bunch';
+  static const TRANSFER = '/transfer';
+  static const EXCLUSIVE = '/exclusive';
+  static const OURBANKS = '/out_banks';
 }

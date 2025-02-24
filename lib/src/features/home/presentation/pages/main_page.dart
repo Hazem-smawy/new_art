@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/features/home/presentation/pages/sub_page/home_page.dart';
+import 'package:get/get.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/features/home/presentation/getX/home_controller.dart';
+import 'package:newart/src/features/home/presentation/pages/sub_page/home_page.dart';
 
+import '../../../../core/routes/app_pages.dart';
 import '../widgets/drawer_widget.dart';
 import 'sub_page/slide_bar_widget.dart';
 
@@ -17,7 +20,7 @@ class _MainPageState extends State<MainPage>
   late double fullSliderBarWidth;
   late AnimationController _animationController;
   late Animation<double> _animation;
-
+  HomeController homeController = Get.find();
   @override
   void initState() {
     super.initState();
@@ -45,6 +48,7 @@ class _MainPageState extends State<MainPage>
     } else {
       _animationController.forward();
     }
+    homeController.isOpenForexclusive.value = _animation.value < 1;
   }
 
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
@@ -54,7 +58,7 @@ class _MainPageState extends State<MainPage>
     return Scaffold(
       backgroundColor: context.whiteColor,
       key: _globalKey,
-      drawer: const MyDrawerWidget(),
+      drawer: MyDrawerWidget(),
       body: Stack(
         children: [
           // HomePage - Main Content
@@ -101,7 +105,9 @@ class _MainPageState extends State<MainPage>
           //   ),
 
           : FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.ADD_ORDER);
+              },
               child: Icon(
                 Icons.add_shopping_cart_outlined,
               ),

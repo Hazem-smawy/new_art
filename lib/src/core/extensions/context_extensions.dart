@@ -121,7 +121,7 @@ import '../constants/text_style.dart';
 //   double get sp20 => 20;
 //   double get sp28 => 28;
 // }
-// import 'package:new_art/src/core/constants/colors.dart';
+// import 'package:newart/src/core/constants/colors.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 

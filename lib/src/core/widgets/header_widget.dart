@@ -1,6 +1,6 @@
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
-import 'package:new_art/src/core/widgets/circle_back_btn_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/widgets/circle_back_btn_widget.dart';
 import 'package:flutter/material.dart';
 
 class HeaderWidget extends StatelessWidget {

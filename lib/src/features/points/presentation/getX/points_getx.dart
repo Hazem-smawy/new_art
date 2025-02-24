@@ -1,5 +1,5 @@
 
-  library points_getx;
+  library;
   export 'points_controller.dart';
   export 'points_service.dart';
   export 'points_state.dart';

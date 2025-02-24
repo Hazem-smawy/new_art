@@ -1,5 +1,5 @@
 
-  library artist_getx;
+  library;
   export 'artist_controller.dart';
   export 'artist_service.dart';
   export 'artist_state.dart';

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
-import 'package:new_art/src/core/widgets/header_widget.dart';
-import 'package:new_art/src/features/artist/presentation/widgets/artist_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/widgets/header_widget.dart';
+import 'package:newart/src/features/artist/presentation/widgets/artist_widget.dart';
 
 class AllArtistPage extends StatelessWidget {
   const AllArtistPage({super.key});

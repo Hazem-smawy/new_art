@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/constants/text_style.dart';
+import 'package:newart/src/core/constants/text_style.dart';
 
 import '../constants/colors.dart';
 import '../constants/spaces_sizes.dart';
@@ -10,7 +10,7 @@ extension ElevatedButtonExtension on ElevatedButton {
     backgroundColor: AppColors.primaryColor, // Background color // Text color
     minimumSize: const Size.fromHeight(50),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(25),
       side: BorderSide(
         color: AppColors.containerColor.withAlpha(120),
       ),
@@ -34,7 +34,7 @@ extension ElevatedButtonExtension on ElevatedButton {
   );
 
   static ButtonStyle dangerStyle = ElevatedButton.styleFrom(
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.red.withAlpha(20),
     elevation: 0,
     padding: const EdgeInsets.symmetric(
       horizontal: Spaces.sp16,
@@ -43,9 +43,6 @@ extension ElevatedButtonExtension on ElevatedButton {
     minimumSize: const Size.fromHeight(50),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
-      side: BorderSide(
-        color: AppColors.containerColor.withAlpha(120),
-      ),
     ),
   );
 
@@ -58,6 +55,20 @@ extension ElevatedButtonExtension on ElevatedButton {
         label,
         style: AppTextStyle.titleLarge.copyWith(
           color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  static ElevatedButton error(
+      {required String label, required VoidCallback onPressed}) {
+    return ElevatedButton(
+      style: dangerStyle,
+      onPressed: onPressed,
+      child: Text(
+        label,
+        style: AppTextStyle.titleLarge.copyWith(
+          color: Colors.red,
         ),
       ),
     );

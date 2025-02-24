@@ -1,20 +1,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 <uses-permission android:name="android.permission.CAMERA"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
 <!-- Optional: Add this permission if you want to use bluetooth telephony device like headset/earbuds -->
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <!-- Optional: Add this permission if you want to save your recordings in public folders -->
- <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="new_art"
+        android:label="newart"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"
         >
+
+        <!-- download file -->
+
+ <provider
+        android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
+        android:authorities="${applicationId}.flutter_downloader.provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/provider_paths"/>
+    </provider>
+        <!-- download file -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,7 +37,8 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="stateVisible|adjustResize" 
+            >
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -54,4 +69,6 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+
+   
 </manifest>

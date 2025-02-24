@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/routes/app_pages.dart';
-import 'package:new_art/src/features/home/presentation/widgets/main_icon_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/routes/app_pages.dart';
+import 'package:newart/src/features/home/presentation/widgets/main_icon_widget.dart';
 
 import '../../widgets/slide_bar_item_widget.dart';
 
@@ -71,7 +71,7 @@ class SlideBarWidget extends StatelessWidget {
                       SlideBarItemWidget(
                         title: 'اعمالنا',
                         action: () {
-                          Get.toNamed(Routes.NEW_WORK_PAGE);
+                          Get.toNamed(Routes.PRODUCTS);
                         },
                         icon: FontAwesomeIcons.fileAudio,
                       ),
@@ -86,7 +86,7 @@ class SlideBarWidget extends StatelessWidget {
                         title: 'حساباتنا',
                         action: () {
                           Get.toNamed(
-                            Routes.BANK_ACCOUNTS,
+                            Routes.OURBANKS,
                           );
                         },
                         icon: FontAwesomeIcons.buildingColumns,

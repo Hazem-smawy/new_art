@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_art/src/core/types/status_response.dart';
+import 'package:newart/src/core/types/status_response.dart';
 
 class HandlingDataView extends StatelessWidget {
   final StatusRequest statusRequest;

@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/routes/app_pages.dart';
-import 'package:new_art/src/core/widgets/thin_divider_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/routes/app_pages.dart';
+import 'package:newart/src/core/widgets/thin_divider_widget.dart';
+import 'package:newart/src/features/home/data/models/points_model.dart';
 
 class ShortReportForUserWidget extends StatelessWidget {
   const ShortReportForUserWidget({
     super.key,
+    required this.pointsModel,
   });
+  final PointsModel pointsModel;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: context.secondaryTextColor.withAlpha(50),
-        ),
-      ),
+      // padding: const EdgeInsets.all(12),
+      // decoration: BoxDecoration(
+      //   borderRadius: BorderRadius.circular(8),
+      //   border: Border.all(
+      //     color: context.secondaryTextColor.withAlpha(50),
+      //   ),
+      // ),
       child: Column(
         children: [
-          AccountPointSammaryWidget(),
-          context.g12,
+          AccountPointSammaryWidget(
+            points: pointsModel,
+          ),
+          context.g8,
           ThinDividerWidget(),
-          context.g12,
+          context.g8,
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ServiceItemWidget(
                 color: Colors.blue,
@@ -71,8 +76,10 @@ class ShortReportForUserWidget extends StatelessWidget {
 }
 
 class AccountPointSammaryWidget extends StatelessWidget {
-  const AccountPointSammaryWidget({
+  PointsModel points;
+  AccountPointSammaryWidget({
     super.key,
+    required this.points,
   });
 
   @override
@@ -118,7 +125,7 @@ class AccountPointSammaryWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '150',
+                  points.points.toString(),
                   style: context.displayLarge,
                 ),
                 context.g12,

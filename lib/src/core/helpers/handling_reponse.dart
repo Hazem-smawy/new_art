@@ -1,4 +1,4 @@
-import 'package:new_art/src/core/types/status_response.dart';
+import 'package:newart/src/core/types/status_response.dart';
 
 handlingData(response) {
   if (response is StatusRequest) {

@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/routes/app_pages.dart';
+import 'package:newart/src/features/auth/presentation/getX/auth_controller.dart';
 
 class MyDrawerWidget extends StatelessWidget {
-  const MyDrawerWidget({
+  MyDrawerWidget({
     super.key,
   });
-
+  AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -54,43 +57,18 @@ class MyDrawerWidget extends StatelessWidget {
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        margin: const EdgeInsets.all(20),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: context.secondaryTextColor.withAlpha(50),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "حازم السماوي",
-                                  style: context.titleLarge,
-                                ),
-                                // Text(
-                                //   "hazemsamwy@gmail.com",
-                                //   style: Theme.of(context).textTheme.bodyMedium,
-                                // ),
-                              ],
+                    Obx(
+                      () => authController.currentUser.value != null &&
+                              (authController
+                                      .currentUser.value?.emailVerified ??
+                                  false)
+                          ? DrawerProfileShowItemWidget()
+                          : GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.AUTH);
+                              },
+                              child: DrawerLoginItemWidget(),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            CircleAvatar(
-                              radius: 17,
-                              backgroundColor: context.secondary,
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                     // const SizedBox(
                     //   height: 10,
@@ -102,16 +80,23 @@ class MyDrawerWidget extends StatelessWidget {
                           DrawerItemWidget(
                               title: "الفنانين",
                               icon: Icons.person_2_outlined,
-                              action: () {}),
+                              action: () {
+                                Get.toNamed(Routes.ALL_ARTISTS);
+                              }),
+                          // ThinDividerWidget(),
                           DrawerItemWidget(
                             title: "الطلبات",
                             icon: Icons.shopping_bag_outlined,
-                            action: () {},
+                            action: () {
+                              Get.toNamed(Routes.TRACK_ORDER);
+                            },
                           ),
                           DrawerItemWidget(
                               title: "احدث الأعمال",
                               icon: Icons.timer_outlined,
-                              action: () {}),
+                              action: () {
+                                Get.toNamed(Routes.PRODUCTS);
+                              }),
                           DrawerItemWidget(
                             title: "الإعدادات",
                             icon: Icons.settings_outlined,
@@ -156,63 +141,162 @@ class MyDrawerWidget extends StatelessWidget {
                           ),
                           context.g12,
                           context.g56,
-                          Container(
-                            child: Row(
-                              textDirection: TextDirection.rtl,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 7),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: context.primary,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'تسجيل الدخول',
-                                        style: context.bodyLarge.copyWith(
-                                          color: context.whiteColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                context.g12,
-                                Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 7),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: context.secondaryTextColor
-                                            .withAlpha(
-                                          50,
-                                        ),
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'إنشاء حساب',
-                                        style: context.bodyLarge,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
+            if (authController.currentUser.value != null &&
+                (authController.currentUser.value?.emailVerified ?? false))
+              DrawerItemWidget(
+                title: "تسجيل الخووج",
+                icon: Icons.logout,
+                action: () async {
+                  await authController.logOut();
+                },
+              ).pr(24),
+            context.g20,
           ],
         ),
+      ),
+    );
+  }
+}
+
+class DrawerProfileShowItemWidget extends StatelessWidget {
+  DrawerProfileShowItemWidget({
+    super.key,
+  });
+
+  AuthController authController = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(Routes.USER);
+      },
+      child: Container(
+        margin: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: context.secondaryTextColor.withAlpha(50),
+          ),
+        ),
+        child: Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: context.blackColor,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      'ترقية',
+                      style: context.bodySmall.copyWith(
+                        color: context.whiteColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(),
+              Text(
+                authController.userDetails.value?.firstName ?? '',
+                style: context.bodyLarge,
+              ),
+              context.g8,
+              CircleAvatar(
+                radius: 13,
+                backgroundColor: context.secondary,
+                backgroundImage:
+                    authController.userDetails.value?.imageURL != null
+                        ? NetworkImage(
+                            authController.userDetails.value?.imageURL ?? '',
+                          ) as ImageProvider
+                        : null,
+                foregroundImage: authController.userDetails.value?.imageURL !=
+                        null
+                    ? NetworkImage(authController.userDetails.value!.imageURL!)
+                    : null,
+                child: authController.userDetails.value?.imageURL == null
+                    ? Icon(
+                        Icons.person, // Placeholder icon
+                        size: 16,
+                        color: Colors.white,
+                      )
+                    : null,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerLoginItemWidget extends StatelessWidget {
+  const DrawerLoginItemWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        textDirection: TextDirection.rtl,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: context.secondary,
+              ),
+              child: Center(
+                child: Text(
+                  'تسجيل الدخول',
+                  style: context.bodyLarge.copyWith(
+                    color: context.whiteColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          context.g12,
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: context.secondaryTextColor.withAlpha(
+                    50,
+                  ),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  'إنشاء حساب',
+                  style: context.bodyLarge,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -228,7 +312,7 @@ class SocialIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
         color: context.containerColor,
@@ -272,16 +356,19 @@ class DrawerItemWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(title, style: Theme.of(context).textTheme.bodyMedium),
+            Text(
+              title,
+              style: context.bodyMedium.copyWith(color: context.blackColor),
+            ),
             const SizedBox(
               width: 20,
             ),
             SizedBox(
-              width: 30,
-              child: FaIcon(
+              width: 25,
+              child: Icon(
                 icon,
                 size: 20,
-                color: Theme.of(context).primaryColor.withAlpha(200),
+                color: context.blackColor,
               ),
             )
           ],

@@ -1,9 +1,6 @@
-import 'package:dartz/dartz.dart';
-import 'package:new_art/src/core/api/http_methods.dart';
-import 'package:new_art/src/core/error/error.dart';
-import 'package:new_art/src/core/types/status_response.dart';
-import 'package:new_art/src/features/auth/data/models/login_model.dart';
-import 'package:new_art/src/features/auth/data/models/user_model.dart';
+import 'package:newart/src/core/api/http_methods.dart';
+import 'package:newart/src/features/auth/data/models/login_model.dart';
+import 'package:newart/src/features/auth/data/models/user_model.dart';
 
 import '../../../../core/api/api.dart';
 
@@ -21,19 +18,12 @@ class AuthRemoteSource {
   }
 
   Future<Map> recoverPassword(String email) async {
-    
     final response = await client.postData(AppLink.register, {'email': email});
     return response;
   }
 
-  // logOut(String email, String password) async {
-  //   var response = await client
-  //       .postData(AppLink.login, {'email': email, 'password': password});
+  // logOutUser() async {
+  //   var response = await client.getData(AppLink.logout);
   //   return response.fold((l) => l, (r) => r);
   // }
-
-  logOutUser() async {
-    var response = await client.getData(AppLink.logout);
-    return response.fold((l) => l, (r) => r);
-  }
 }

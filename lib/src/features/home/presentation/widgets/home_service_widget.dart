@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/routes/app_pages.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/routes/app_pages.dart';
 
 class HomwServiceWidget extends StatelessWidget {
   const HomwServiceWidget({
@@ -26,7 +26,7 @@ class HomwServiceWidget extends StatelessWidget {
               smallIcon: false,
               label: 'اعمالنا الحصرية',
               action: () {
-                Get.toNamed(Routes.NEW_WORK_PAGE);
+                Get.toNamed(Routes.PRODUCTS);
               }),
           context.g8,
 

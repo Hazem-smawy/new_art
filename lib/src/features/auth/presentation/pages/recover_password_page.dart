@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/features/auth/presentation/getX/auth_controller.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/auth_back_btn_widget.dart';
-import 'package:new_art/src/features/auth/presentation/widgets/auth_image_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/features/auth/presentation/getX/auth_controller.dart';
+import 'package:newart/src/features/auth/presentation/widgets/auth_back_btn_widget.dart';
+import 'package:newart/src/features/auth/presentation/widgets/auth_image_widget.dart';
 
 import '../../../../core/helpers/validation.dart';
 import '../widgets/auth_text_fieldwidget.dart';
@@ -33,20 +33,28 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           children: [
             SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   child: Form(
+                    key: authController.recovertPasswordFormKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: Get.height / 6,
+                          height: Get.height / 8,
                         ),
                         AuthImageWidget(),
                         Text(
                           "التحقق من البريد الإلكتروني",
-                          style: context.titleLarge,
+                          style: context.displayMedium,
                         ),
+                        context.g4,
+                        Text(
+                          'سيتم ارسال رسالة الى بريدك الألكتوني قم بالضعط علية وتغير كلمة الموروو وقم ب  تسجيل الدخول من جديد',
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.center,
+                          style: context.bodySmall,
+                        ).ph(20),
                         context.g28,
                         AuthTextFieldwidget(
                           controller: authController.emailController,
@@ -74,19 +82,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
     );
   }
-
-  Future resetPassword() async {
-    // try {
-    //   await FirebaseAuth.instance.sendPasswordResetEmail(
-    //     email: emailController.text.trim(),
-    //   );
-
-    //   //Utils.showSnackBar('قمنا بارسال رمز التحقق الى بريدك', type: 'info');
-    // } on FirebaseAuthException {
-    //   // Utils.showSnackBar(e.message);
-    // }
-    Get.back();
-  }
 }
 
 class CustomBtnWithIconWidget extends StatelessWidget {
@@ -97,23 +92,32 @@ class CustomBtnWithIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    return ElevatedButton(
       onPressed: () => action(),
       style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Theme.of(context).primaryColor,
-        minimumSize: const Size.fromHeight(44),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        backgroundColor: context.secondary,
+        minimumSize: const Size.fromHeight(50),
         elevation: 0,
       ),
-      icon: const Icon(
-        Icons.lock_open,
-        size: 18,
-      ),
-      label: Text(
-        title,
-        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: context.titleMedium.copyWith(
               color: context.whiteColor,
             ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Icon(
+            Icons.lock_open,
+            size: 20,
+            color: context.whiteColor,
+          ),
+        ],
       ),
     );
   }

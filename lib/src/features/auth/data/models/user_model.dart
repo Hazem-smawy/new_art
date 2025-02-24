@@ -5,22 +5,24 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class UserModel {
   final String email;
-  final String password;
+  String? password;
   final String mobile;
-  final String username;
+  String? username;
   @JsonKey(name: 'last_name')
-  final String lastName;
+  String? lastName;
+  String? imageURL;
 
   @JsonKey(name: 'first_name')
   final String firstName;
 
   UserModel({
     required this.email,
-    required this.password,
+    this.password = '',
     required this.mobile,
-    required this.username,
-    required this.lastName,
+    this.username = '',
+    this.lastName = '',
     required this.firstName,
+    this.imageURL,
   });
 
   // Factory constructor for creating a new `UserModel` instance from a map.

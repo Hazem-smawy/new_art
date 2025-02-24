@@ -1,5 +1,5 @@
 
-  library user_getx;
+  library;
   export 'user_controller.dart';
   export 'user_service.dart';
   export 'user_state.dart';

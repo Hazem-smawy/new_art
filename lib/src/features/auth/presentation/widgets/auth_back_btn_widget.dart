@@ -21,7 +21,7 @@ class AuthBackBtnWidget extends StatelessWidget {
             margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Theme.of(context).colorScheme.surface.withOpacity(0.3),
+              color: Theme.of(context).colorScheme.surface.withAlpha(80),
             ),
             child: FaIcon(
               FontAwesomeIcons.arrowRightLong,

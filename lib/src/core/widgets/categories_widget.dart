@@ -1,4 +1,4 @@
-import 'package:new_art/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesWidget<T> extends StatelessWidget {

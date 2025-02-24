@@ -1,4 +1,4 @@
-# new_art
+# newart
 
 A new Flutter project.
 

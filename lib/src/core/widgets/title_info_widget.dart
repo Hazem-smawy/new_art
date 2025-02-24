@@ -1,6 +1,6 @@
-import 'package:new_art/src/core/constants/spaces_sizes.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/constants/spaces_sizes.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

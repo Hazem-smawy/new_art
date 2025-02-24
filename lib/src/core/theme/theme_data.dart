@@ -1,5 +1,5 @@
-import 'package:new_art/src/core/constants/colors.dart';
-import 'package:new_art/src/core/constants/text_style.dart';
+import 'package:newart/src/core/constants/colors.dart';
+import 'package:newart/src/core/constants/text_style.dart';
 import 'package:flutter/material.dart';
 
 class AppThemData {

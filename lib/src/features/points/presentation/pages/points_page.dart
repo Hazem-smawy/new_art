@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
-import 'package:new_art/src/core/routes/app_pages.dart';
-import 'package:new_art/src/core/widgets/header_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/routes/app_pages.dart';
+import 'package:newart/src/core/widgets/header_widget.dart';
 
 class PointsPage extends StatelessWidget {
   const PointsPage({super.key});

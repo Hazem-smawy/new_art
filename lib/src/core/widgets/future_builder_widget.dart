@@ -1,5 +1,5 @@
-import 'package:new_art/src/core/constants/assets.dart';
-import 'package:new_art/src/core/widgets/empty_widget.dart';
+import 'package:newart/src/core/constants/assets.dart';
+import 'package:newart/src/core/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 
 class ReusableFutureBuilder<T> extends StatelessWidget {

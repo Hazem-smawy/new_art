@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date;
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
-import 'package:new_art/src/core/widgets/header_widget.dart';
-import 'package:new_art/src/core/widgets/thin_divider_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/widgets/header_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class PointsStaticsPage extends StatefulWidget {

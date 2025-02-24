@@ -4,13 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as date_format;
 
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
-import 'package:new_art/src/core/widgets/header_widget.dart';
-import 'package:new_art/src/core/widgets/thin_divider_widget.dart';
-import 'package:new_art/src/features/user/presentation/widgets/short_report_for_user_widget.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/widgets/header_widget.dart';
+import 'package:newart/src/core/widgets/thin_divider_widget.dart';
 
-import '../../../../core/utils/arabic_date_formater.dart';
 import '../../../../core/utils/currency_format.dart';
 
 class WalletPage extends StatelessWidget {

@@ -1,20 +1,27 @@
 import 'package:get/get.dart';
-import 'package:new_art/src/features/artist/presentation/pages/all_artist_page.dart';
-import 'package:new_art/src/features/auth/presentation/pages/auth_page.dart';
-import 'package:new_art/src/features/bunch/presentation/pages/pages.dart';
-import 'package:new_art/src/features/chat/presentation/pages/chat_page.dart';
-import 'package:new_art/src/features/home/presentation/pages/main_page.dart';
-import 'package:new_art/src/features/new_work/presentation/pages/all_work_page.dart';
-import 'package:new_art/src/features/order/presentation/pages/add_order_page.dart';
-import 'package:new_art/src/features/order/presentation/pages/all_orders_page.dart';
-import 'package:new_art/src/features/order/presentation/pages/chopping_cart_page.dart';
-import 'package:new_art/src/features/order/presentation/pages/track_order_page.dart';
-import 'package:new_art/src/features/points/presentation/pages/points_page.dart';
-import 'package:new_art/src/features/points/presentation/pages/points_statics_page.dart';
-import 'package:new_art/src/features/user/presentation/pages/user_page.dart';
-import 'package:new_art/src/features/wallet/presentation/pages/wallet_page.dart';
+import 'package:newart/src/core/middleware/auth_middleware.dart';
+import 'package:newart/src/features/artist/presentation/pages/all_artist_page.dart';
+import 'package:newart/src/features/auth/presentation/pages/auth_page.dart';
+import 'package:newart/src/features/banks/presentation/getX/banks_binding.dart';
+import 'package:newart/src/features/banks/presentation/pages/our_bank_accounts_page.dart';
+import 'package:newart/src/features/bunch/presentation/getX/bunch_binding.dart';
+import 'package:newart/src/features/bunch/presentation/pages/bunch_page.dart';
+import 'package:newart/src/features/chat/presentation/pages/chat_page.dart';
+import 'package:newart/src/features/home/presentation/pages/main_page.dart';
+import 'package:newart/src/features/order/presentation/getX/order_binding.dart';
+import 'package:newart/src/features/order/presentation/pages/add_order_page.dart';
+import 'package:newart/src/features/order/presentation/pages/track_order_page.dart';
+import 'package:newart/src/features/points/presentation/pages/points_page.dart';
+import 'package:newart/src/features/points/presentation/pages/points_statics_page.dart';
+import 'package:newart/src/features/user/presentation/pages/user_page.dart';
+import 'package:newart/src/features/wallet/presentation/getX/wallet_binding.dart';
+import 'package:newart/src/features/wallet/presentation/pages/all_payment_page.dart';
+import 'package:newart/src/features/wallet/presentation/pages/wallet_page.dart';
 
-import '../../features/banks/presentation/pages/our_bank_accounts_page.dart';
+import '../../features/exclusive/presentation/getX/exclusive_binding.dart';
+import '../../features/exclusive/presentation/pages/exclusive_page.dart';
+import '../../features/product/presentation/getX/product_binding.dart';
+import '../../features/product/presentation/pages/all_product_page.dart';
 
 part 'app_routes.dart';
 
@@ -22,47 +29,46 @@ class AppPages {
   // ignore: constant_identifier_names
   static const INITIAL = Routes.MAIN;
   static final routesPage = [
-    GetPage(
-      name: Routes.AUTH,
-      page: () => AuthPage(),
-      // bindings: [
-      //   AuthBinding(),
-      // ],
-      // middlewares: [
-      //   AuthMiddleware(),
-      // ],
-    ),
+    GetPage(name: Routes.AUTH, page: () => AuthMainPage(), middlewares: []),
     GetPage(
       name: Routes.MAIN,
       page: () => const MainPage(),
     ),
     GetPage(
       name: Routes.ADD_ORDER,
-      page: () => const AddOrderPage(),
+      page: () => AddOrderPage(),
+      binding: OrderBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
     GetPage(
-      name: Routes.BANK_ACCOUNTS,
-      page: () => const OutBankAccountsPage(),
+      name: Routes.EXCLUSIVE,
+      page: () => AllExclusivePage(),
+      binding: ExclusiveBinding(),
     ),
     GetPage(
-      name: Routes.NEW_WORK_PAGE,
-      page: () => const AllWorkPage(),
+      name: Routes.ALL_PAYMENTS,
+      page: () => AllPaymentPage(),
+      binding: WalletBinding(),
     ),
     GetPage(
-      name: Routes.ALL_ORDER,
-      page: () => const AllOrdersPage(),
+      name: Routes.PRODUCTS,
+      page: () => AllProductPage(),
+      binding: ProductBinding(),
     ),
-    GetPage(
-      name: Routes.SHOPPING_CART,
-      page: () => const ShoppingCartPage(),
-    ),
+
+    // GetPage(
+    //   name: Routes.SHOPPING_CART,
+    //   page: () => const ShoppingCartPage(),
+    // ),
     GetPage(
       name: Routes.ALL_ARTISTS,
       page: () => const AllArtistPage(),
     ),
     GetPage(
       name: Routes.USER,
-      page: () => const UserPage(),
+      page: () => UserPage(),
     ),
     GetPage(
       name: Routes.USER,
@@ -81,16 +87,26 @@ class AppPages {
       page: () => WalletPage(),
     ),
     GetPage(
-      name: Routes.TRACK_ORDER,
-      page: () => TrackOrderPage(),
-    ),
+        name: Routes.TRACK_ORDER,
+        page: () => TrackOrderPage(),
+        binding: OrderBinding()),
     GetPage(
       name: Routes.POINTS_STATICS,
       page: () => PointsStaticsPage(),
     ),
+    // GetPage(
+    //   name: Routes.TRANSFER,
+    //   page: () => OrderPaymentPage(),
+    // ),
     GetPage(
       name: Routes.BUNCH,
       page: () => BunchPage(),
+      binding: BunchBinding(),
+    ),
+    GetPage(
+      name: Routes.OURBANKS,
+      page: () => OurBankAccountsPage(),
+      binding: BanksBinding(),
     ),
   ];
 }

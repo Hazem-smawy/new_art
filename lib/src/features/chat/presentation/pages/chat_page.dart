@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/widgets/header_widget.dart';
-import 'package:new_art/src/features/chat/presentation/getX/chat_controller.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/widgets/header_widget.dart';
+import 'package:newart/src/features/chat/presentation/getX/chat_controller.dart';
 
 class ChatPage extends StatelessWidget {
   ChatPage({super.key});

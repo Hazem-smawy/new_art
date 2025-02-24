@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-// ignore: depend_on_referenced_packages
+// ignore: depend_on_referenced_packages, deprecated_member_use
 import 'package:drift_dev/api/migrations.dart';
 
 import '../../../core/error/error.dart';

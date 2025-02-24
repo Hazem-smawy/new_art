@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:new_art/src/core/extensions/context_extensions.dart';
-import 'package:new_art/src/core/extensions/padding_extension.dart';
-import 'package:new_art/src/core/widgets/header_widget.dart';
-import 'package:new_art/src/features/user/presentation/widgets/short_report_for_user_widget.dart';
+import 'package:get/get.dart';
+import 'package:newart/src/core/extensions/context_extensions.dart';
+import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/widgets/header_widget.dart';
+import 'package:newart/src/features/home/presentation/getX/home_controller.dart';
+import 'package:newart/src/features/user/presentation/widgets/short_report_for_user_widget.dart';
 
 class UserPage extends StatelessWidget {
-  const UserPage({super.key});
-
+  UserPage({super.key});
+  HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +39,8 @@ class UserPage extends StatelessWidget {
                   color: context.secondaryTextColor.withAlpha(50),
                 ),
               ),
-              child: AccountPointSammaryWidget(),
+              child: AccountPointSammaryWidget(
+                  points: homeController.points.value),
             ),
             context.g16,
             Row(
@@ -66,7 +68,7 @@ class UserItemWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(3),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(25),
           border: Border.all(
             color: context.secondaryTextColor.withAlpha(50),
           ),
