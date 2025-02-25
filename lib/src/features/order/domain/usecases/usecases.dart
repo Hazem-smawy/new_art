@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:newart/src/core/usecases/usecases.dart';
 import 'package:newart/src/features/order/data/models/all_orders_model.dart';
+import 'package:newart/src/features/order/data/models/new_order_mod_model.dart';
 import 'package:newart/src/features/order/data/models/new_order_request_model.dart';
 import 'package:newart/src/features/order/data/models/order_types_model.dart';
 import 'package:newart/src/features/order/data/models/payment_order_model.dart';
@@ -29,6 +30,18 @@ class AddNewOrderUseCase
   @override
   Future<Either<Failure, AddOrderResponseModel>> call(Params params) {
     return orderRepository.addNewOrder(params.data);
+  }
+}
+
+class AddNewOrderModUseCase
+    extends ParamsUseCase<ModifiedOrderResponse, Params<NewOrderModModel>> {
+  final OrderRepository orderRepository;
+
+  AddNewOrderModUseCase({required this.orderRepository});
+
+  @override
+  Future<Either<Failure, ModifiedOrderResponse>> call(Params params) {
+    return orderRepository.addNewModOrder(params.data);
   }
 }
 

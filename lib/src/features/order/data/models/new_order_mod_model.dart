@@ -1,13 +1,72 @@
-import 'package:equatable/equatable.dart';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:math';
 
-part 'exclusive_model.g.dart';
+import '../../domain/entities/entities.dart';
 
-final Random _random = Random();
+part 'new_order_mod_model.g.dart';
 
 @JsonSerializable()
-class ExclusiveModel extends Equatable {
+class NewOrderModModel {
+  int? orderId;
+  final String description;
+
+  @JsonKey(name: 'audio_material')
+  @FileConverter() // Use the custom converter here.
+  final File? audioClip;
+
+  @JsonKey(name: 'audio_attachment')
+  @FileConverter() // Use the custom converter here.
+  final File? audioAttachment;
+  NewOrderModModel({
+    required this.description,
+    required this.audioClip,
+    required this.audioAttachment,
+    this.orderId = 0,
+  });
+
+  factory NewOrderModModel.fromJson(Map<String, dynamic> json) =>
+      _$NewOrderModModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NewOrderModModelToJson(this);
+}
+
+class FileConverter extends JsonConverter<File?, String?> {
+  const FileConverter();
+
+  @override
+  File fromJson(String? json) {
+    // Converts the string (file path) back to a File.
+    return File(json ?? '');
+  }
+
+  @override
+  String toJson(File? object) {
+    return object?.path ?? '';
+  }
+}
+
+@JsonSerializable()
+class ModifiedOrderResponse {
+  final String message;
+  final OrderMod ordermod;
+  final String status;
+
+  ModifiedOrderResponse({
+    required this.message,
+    required this.ordermod,
+    required this.status,
+  });
+
+  factory ModifiedOrderResponse.fromJson(Map<String, dynamic> json) =>
+      _$ModifiedOrderResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ModifiedOrderResponseToJson(this);
+}
+
+@JsonSerializable()
+class OrderMod {
   final int id;
   @JsonKey(name: 'ref_id')
   final String refId;
@@ -81,7 +140,7 @@ class ExclusiveModel extends Equatable {
   @JsonKey(name: 'updated_at')
   final String updatedAt;
 
-  const ExclusiveModel({
+  OrderMod({
     required this.id,
     required this.refId,
     required this.slug,
@@ -123,64 +182,58 @@ class ExclusiveModel extends Equatable {
     required this.updatedAt,
   });
 
-  factory ExclusiveModel.fromJson(Map<String, dynamic> json) =>
-      _$ExclusiveModelFromJson(json);
+  factory OrderMod.fromJson(Map<String, dynamic> json) =>
+      _$OrderModFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ExclusiveModelToJson(this);
+  Map<String, dynamic> toJson() => _$OrderModToJson(this);
 
-  @override
-  List<Object?> get props => [
-        id,
-        refId,
-        slug,
-        ordId,
-        userId,
-        marketerId,
-        orderTypeId,
-        productCategoryId,
-        nameOrder,
-        artistName,
-        orderData,
-        audioClip,
-        audioAttachment,
-        workingLink,
-        comments,
-        dateOrder,
-        paymentType,
-        sheilaName,
-        additionsToOrder,
-        implementationPeriod,
-        currencyId,
-        price,
-        cabinId,
-        artistId,
-        dateUpdateWaite,
-        paymentData,
-        reviewData,
-        dateUpdatePross,
-        audioMaterial,
-        notes,
-        notesOnWork,
-        dateCompleted,
-        notesReProcess,
-        dateReProcess,
-        orderStatus,
-        exclusive,
-        orderPayment,
-        createdAt,
-        updatedAt,
+  List<OrderStatus> get getOrderStatus => [
+        OrderStatus(
+          id: 0,
+          name: 'طلب تعديل جديد', // New Order
+          date: dateOrder,
+          isCompleted: orderStatus >= 0,
+          color: Colors.blue,
+          icon: Icons.music_note, // Represents a new audio request
+          statusId: 0,
+        ),
+        OrderStatus(
+          id: 1,
+          name: "قيد الإنتظار", // Waiting
+          date: dateUpdateWaite,
+          isCompleted: orderStatus >= 1,
+          color: Colors.orange,
+          icon: Icons.hourglass_empty, // Indicates waiting
+          statusId: 1,
+        ),
+        OrderStatus(
+          id: 2,
+          name: "قيد المعالجة", // Processing
+          date: dateUpdatePross,
+          isCompleted: orderStatus >= 2,
+          color: Colors.green,
+          icon: Icons
+              .graphic_eq, // Represents processing (e.g., equalizing or effects processing)
+          statusId: 2,
+        ),
+        OrderStatus(
+          id: 3,
+          name: "قيد التنفيذ", // Executing
+          date: dateCompleted,
+          isCompleted: orderStatus >= 3,
+          color: Colors.purple,
+          icon: Icons.settings_voice, // Indicates active processing or mixing
+          statusId: 3,
+        ),
+        OrderStatus(
+          id: 4,
+          name: "اكتمال", // Completed
+          date: dateCompleted,
+          isCompleted: orderStatus >= 4,
+          color: Colors.teal,
+          icon:
+              Icons.library_music, // Represents a completed song or audio track
+          statusId: 4,
+        ),
       ];
-
-  String get image {
-    final List<String> images = [
-      'https://i.pinimg.com/736x/1e/6d/0a/1e6d0a95510b4e3d662aa777674697d1.jpg',
-      'https://i.pinimg.com/736x/d6/be/64/d6be6469430482dff19b45250bcd109c.jpg',
-      'https://i.pinimg.com/736x/88/c3/e5/88c3e500e2eec9b0751331b45fa56afd.jpg',
-      'https://i.pinimg.com/736x/6d/16/21/6d1621e454ae008986afe53e4e6a8894.jpg',
-      'https://i.pinimg.com/736x/29/9c/73/299c73b1c25dc16dff94c80b0eef8ec3.jpg',
-      'https://i.pinimg.com/736x/8d/33/4b/8d334b940b01b9d74fb32d37be144700.jpg',
-    ];
-
-    return images[_random.nextInt(images.length)];
-  }
 }

@@ -38,6 +38,7 @@ class RecordController extends GetxController {
   // }
 
   Future<void> startRecording() async {
+    isRecording.value = true;
     await requestMicrophonePermission();
     if (await _recorder.hasPermission()) {
       if (recordingPath.value.isEmpty) {
@@ -46,7 +47,6 @@ class RecordController extends GetxController {
       final filePath = '$recordingPath/audio_record.m4a';
       recordAudioFilePath.value = filePath;
       await _recorder.start(const RecordConfig(), path: filePath);
-      isRecording.value = true;
     }
   }
 

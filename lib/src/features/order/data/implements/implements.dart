@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 
 import 'package:newart/src/core/error/failures.dart';
 import 'package:newart/src/features/order/data/models/all_orders_model.dart';
+import 'package:newart/src/features/order/data/models/new_order_mod_model.dart';
 
 import 'package:newart/src/features/order/data/models/new_order_request_model.dart';
-
 
 import 'package:newart/src/features/order/data/models/order_types_model.dart';
 import 'package:newart/src/features/order/data/models/payment_order_model.dart';
@@ -54,6 +54,14 @@ class OrderRepositoryImp implements OrderRepository {
       TransferModel trans) async {
     return await handleApiResponse<GetPaymentOrderInfoModel>(() async {
       return await remoteDataSource.addNewPayment(trans);
+    });
+  }
+
+  @override
+  Future<Either<Failure, ModifiedOrderResponse>> addNewModOrder(
+      NewOrderModModel modOrder) async {
+    return await handleApiResponse<ModifiedOrderResponse>(() async {
+      return await remoteDataSource.addNewModOrder(modOrder);
     });
   }
 }

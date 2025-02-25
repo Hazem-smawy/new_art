@@ -24,12 +24,13 @@ class OrderBinding implements Bindings {
     Get.lazyPut(
         () => GetOrderPaymentDetailsUseCase(orderRepository: Get.find()));
     Get.lazyPut(() => PostTranserUserCase(orderRepository: Get.find()));
+    Get.lazyPut(() => AddNewOrderModUseCase(orderRepository: Get.find()));
     Get.lazyPut(() => OrderController(
-          fetchAllOrderTypesUseCase: Get.find(),
-          addNewOrderUseCase: Get.find(),
-          fetchAllOrderUseCase: Get.find(),
-          getOrderPaymentDetailsUseCase: Get.find(),
-          postTranserUserCase: Get.find(),
-        ));
+        fetchAllOrderTypesUseCase: Get.find(),
+        addNewOrderUseCase: Get.find(),
+        fetchAllOrderUseCase: Get.find(),
+        getOrderPaymentDetailsUseCase: Get.find(),
+        postTranserUserCase: Get.find(),
+        addNewOrderModUseCase: Get.find()));
   }
 }

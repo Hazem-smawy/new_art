@@ -6,6 +6,7 @@ import 'package:newart/src/core/widgets/beautiful_simple_loading.dart';
 import 'package:newart/src/core/widgets/error_state_widget.dart';
 import 'package:newart/src/core/widgets/header_widget.dart';
 import 'package:newart/src/features/order/presentation/getX/order_controller.dart';
+import 'package:newart/src/features/order/presentation/pages/order_details_sheet.dart';
 import 'package:newart/src/features/order/presentation/widgets/complete_order_item_widget.dart';
 import 'package:newart/src/features/order/presentation/widgets/order_initial_widget.dart';
 import 'package:newart/src/features/order/presentation/widgets/order_timeline_card.dart';
@@ -66,9 +67,17 @@ class TrackOrderPage extends StatelessWidget {
                                   itemCount:
                                       orderController.unCompletedOrder.length,
                                   itemBuilder: (context, index) {
-                                    return OrderTimelineCard(
-                                      order: orderController
-                                          .unCompletedOrder[index],
+                                    final order =
+                                        orderController.unCompletedOrder[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.bottomSheet(
+                                          OrderDetailsSheet(orderModel: order),
+                                        );
+                                      },
+                                      child: OrderTimelineCard(
+                                        order: order,
+                                      ),
                                     );
                                   },
                                 )
@@ -77,17 +86,26 @@ class TrackOrderPage extends StatelessWidget {
                                       orderController.selectedCategory.value),
                                   primary: true,
                                   shrinkWrap: true,
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount:
                                       orderController.filteredOrders.length,
                                   itemBuilder: (context, index) {
-                                    return CompleteOrderItemWidget(
-                                      orderModel:
-                                          orderController.filteredOrders[index],
+                                    final order =
+                                        orderController.filteredOrders[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.bottomSheet(
+                                          OrderDetailsSheet(orderModel: order),
+                                        );
+                                      },
+                                      child: OrderItemWidget(
+                                        order: order,
+                                      ),
                                     );
                                   },
                                   separatorBuilder: (context, index) =>
-                                      context.g8,
+                                      context.g4,
                                 ),
                           context.g28,
                         ],

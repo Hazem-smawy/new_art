@@ -42,7 +42,7 @@ extension ElevatedButtonExtension on ElevatedButton {
     ),
     minimumSize: const Size.fromHeight(50),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(25),
     ),
   );
 

@@ -103,15 +103,6 @@ class _ExclusiveListViewState extends State<ExclusiveListView> {
     // });
   }
 
-  final images = [
-    'https://i.pinimg.com/736x/1e/6d/0a/1e6d0a95510b4e3d662aa777674697d1.jpg',
-    'https://i.pinimg.com/736x/d6/be/64/d6be6469430482dff19b45250bcd109c.jpg',
-    'https://i.pinimg.com/736x/88/c3/e5/88c3e500e2eec9b0751331b45fa56afd.jpg',
-    'https://i.pinimg.com/736x/6d/16/21/6d1621e454ae008986afe53e4e6a8894.jpg',
-    'https://i.pinimg.com/736x/29/9c/73/299c73b1c25dc16dff94c80b0eef8ec3.jpg',
-    'https://i.pinimg.com/736x/8d/33/4b/8d334b940b01b9d74fb32d37be144700.jpg',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -133,12 +124,9 @@ class _ExclusiveListViewState extends State<ExclusiveListView> {
               ),
               itemCount: widget.items.length,
               itemBuilder: (context, index) {
-                int randomNumber = random.nextInt(6);
-
                 return ExclusiveItemWidget(
                   item: widget.items[index],
                   index: index,
-                  image: images[randomNumber],
                 );
               },
             ),
@@ -153,12 +141,11 @@ class _ExclusiveListViewState extends State<ExclusiveListView> {
 class ExclusiveItemWidget extends StatelessWidget {
   final ExclusiveModel item;
   final int index;
-  final String image;
-  ExclusiveItemWidget(
-      {super.key,
-      required this.item,
-      required this.index,
-      required this.image});
+  ExclusiveItemWidget({
+    super.key,
+    required this.item,
+    required this.index,
+  });
   final AudioController audioController = Get.find();
   final HomeController homeController = Get.find();
 
@@ -173,7 +160,7 @@ class ExclusiveItemWidget extends StatelessWidget {
         child: Stack(
           children: [
             CachedImageWidget(
-              imageUrl: image,
+              imageUrl: item.image,
               height: double.infinity,
             ),
             SizedBox(

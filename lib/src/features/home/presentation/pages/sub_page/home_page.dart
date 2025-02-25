@@ -7,7 +7,7 @@ import 'package:newart/src/core/widgets/beautiful_simple_loading.dart';
 import 'package:newart/src/core/widgets/error_state_widget.dart';
 import 'package:newart/src/core/widgets/thin_divider_widget.dart';
 import 'package:newart/src/features/exclusive/presentation/widgets/empty_widget.dart';
-import 'package:newart/src/features/exclusive/presentation/widgets/widgets.dart';
+import 'package:newart/src/features/exclusive/presentation/widgets/exclusive_widget.dart';
 import 'package:newart/src/features/home/presentation/getX/home_controller.dart';
 import 'package:newart/src/features/home/presentation/widgets/home_artist_widget.dart';
 import 'package:newart/src/features/home/presentation/widgets/home_our_recent_work_widget.dart';

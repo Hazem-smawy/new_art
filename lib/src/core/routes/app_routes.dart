@@ -7,6 +7,7 @@ abstract class Routes {
   static const AUTH = '/auth';
   static const MAIN = '/main';
   static const ADD_ORDER = '/add_order';
+  static const ADD_MOD_ORDER = '/add_mod_order';
   static const SHOPPING_CART = '/shopping_cart';
 
   static const ALL_PAYMENTS = '/all_payments';

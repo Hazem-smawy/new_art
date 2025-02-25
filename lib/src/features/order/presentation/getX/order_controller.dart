@@ -8,6 +8,7 @@ import 'package:newart/src/core/usecases/usecases.dart';
 import 'package:newart/src/core/utils/dialogs.dart';
 import 'package:newart/src/core/utils/usecase_helper.dart';
 import 'package:newart/src/features/order/data/models/all_orders_model.dart';
+import 'package:newart/src/features/order/data/models/new_order_mod_model.dart';
 import 'package:newart/src/features/order/data/models/new_order_request_model.dart';
 import 'package:newart/src/features/order/data/models/order_model.dart';
 import 'package:newart/src/features/order/data/models/order_types_model.dart';
@@ -22,13 +23,16 @@ import '../../../../core/types/status_types.dart';
 
 class OrderController extends GetxController {
   FetchAllOrderTypesUseCase fetchAllOrderTypesUseCase;
-  Rx<Status> orderStatus = Status.initial.obs;
-  Rx<Status> getPaymentStatus = Status.initial.obs;
 
+  //usescase
   AddNewOrderUseCase addNewOrderUseCase;
   FetchAllOrderUseCase fetchAllOrderUseCase;
   GetOrderPaymentDetailsUseCase getOrderPaymentDetailsUseCase;
   PostTranserUserCase postTranserUserCase;
+  AddNewOrderModUseCase addNewOrderModUseCase;
+
+  Rx<Status> orderStatus = Status.initial.obs;
+  Rx<Status> getPaymentStatus = Status.initial.obs;
   final orderFormKey = GlobalKey<FormState>();
   final paymentFormKey = GlobalKey<FormState>();
   final oldOrderModel = Rx<OrderModel?>(null);
@@ -42,6 +46,7 @@ class OrderController extends GetxController {
     required this.fetchAllOrderUseCase,
     required this.getOrderPaymentDetailsUseCase,
     required this.postTranserUserCase,
+    required this.addNewOrderModUseCase,
   });
 
   final orderTypes = Rx<OrderTypesResponse?>(null);
@@ -224,6 +229,14 @@ class OrderController extends GetxController {
     );
   }
 
+  resetControllers() {
+    oldOrderModel.value = null;
+    noteController.clear();
+    recordController.recordAudioFilePath.value = '';
+    recordController.recordingPath.value = '';
+    filePickerController.selectedFiles.clear();
+  }
+
   Future<void> getUncompletedOrder() async {
     if (allOrders.value != null) {
       unCompletedOrder.value =
@@ -289,20 +302,121 @@ class OrderController extends GetxController {
           true,
         );
       }, (r) async {
-        Get.back();
         if (isUpdate == null || isUpdate == false) {
-          // Remove the current page and navigate to the Track Order page
+          Get.back();
+          CustomDialog.showDialog(
+              title: 'تم بنجاح',
+              description: r.message,
+              color: Colors.green,
+              icon: Icons.check_circle_outline,
+              action: () {});
+          await Future.delayed(Duration(milliseconds: 1000));
+          if (Get.isDialogOpen ?? true) {
+            Get.back();
+          }
           Get.offNamed(Routes.TRACK_ORDER);
         } else {
           await fetchAllOrders();
+          Get.back();
+          CustomDialog.showDialog(
+              title: 'تم بنجاح',
+              description: r.message,
+              color: Colors.green,
+              icon: Icons.check_circle_outline,
+              action: () {});
+          await Future.delayed(Duration(milliseconds: 1200));
+          if (Get.isDialogOpen ?? true) {
+            Get.back();
+          }
           Get.back(); // Pop the current page from the stack
         }
 
+        // CustomDialog.customSnackBar(
+        //   r.message,
+        //   SnackPosition.TOP,
+        //   false,
+        // );
+      });
+    } else {
+      CustomDialog.customSnackBar(
+        'قم بإدخال كل البيانات المطلوبة',
+        SnackPosition.TOP,
+        true,
+      );
+    }
+  }
+
+  Future<void> addNewOrderMode(int? id) async {
+    if (id == null) {
+      CustomDialog.customSnackBar(
+        'ليس هناك اي طلب',
+        SnackPosition.TOP,
+        true,
+      );
+
+      return;
+    }
+    if (orderFormKey.currentState?.validate() ?? false) {
+      if (recordController.recordAudioFilePath.value == '') {
         CustomDialog.customSnackBar(
-          r.message,
+          'قم بأضافة المرفقات الصوتية',
           SnackPosition.TOP,
-          false,
+          true,
         );
+
+        return;
+      }
+      File? audioClip;
+      File? selectedFile;
+      if (recordController.recordAudioFilePath.value != '') {
+        audioClip = File(recordController.recordAudioFilePath.value);
+      }
+      if (filePickerController.selectedFiles.isNotEmpty &&
+          filePickerController.selectedFiles.first.path != '') {
+        selectedFile =
+            File(filePickerController.selectedFiles.first.path ?? '');
+      }
+
+      CustomDialog.loadingProgress();
+      final res = await addNewOrderModUseCase(
+        Params<NewOrderModModel>(
+          NewOrderModModel(
+            orderId: id,
+            description: noteController.text,
+            audioClip: audioClip,
+            audioAttachment: selectedFile,
+          ),
+        ),
+      );
+
+      res.fold((f) {
+        Get.back();
+        CustomDialog.customSnackBar(
+          'حدث خطأ ما',
+          SnackPosition.TOP,
+          true,
+        );
+      }, (r) async {
+        Get.back();
+
+        await fetchAllOrders();
+        CustomDialog.showDialog(
+            title: 'تم بنجاح',
+            description: r.message,
+            color: Colors.green,
+            icon: Icons.check_circle_outline,
+            action: () {});
+        await Future.delayed(Duration(milliseconds: 1000));
+        if (Get.isDialogOpen ?? true) {
+          Get.back();
+        }
+        Get.back(); // Pop the current page from the stack
+
+        // CustomDialog.customSnackBar(
+        //   r.message,
+        //   SnackPosition.TOP,
+        //   false,
+        // );
       });
     } else {
       CustomDialog.customSnackBar(

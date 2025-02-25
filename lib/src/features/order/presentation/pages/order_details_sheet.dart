@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:newart/src/core/extensions/context_extensions.dart';
 import 'package:newart/src/core/extensions/padding_extension.dart';
+import 'package:newart/src/core/routes/app_pages.dart';
 import 'package:newart/src/core/utils/data_format.dart';
+import 'package:newart/src/core/widgets/custom_btns_widget.dart';
 import 'package:newart/src/core/widgets/thin_divider_widget.dart';
 import 'package:newart/src/features/order/data/models/order_model.dart';
 import 'package:newart/src/features/order/domain/entities/entities.dart';
@@ -29,11 +32,41 @@ class OrderDetailsSheet extends StatelessWidget {
         ),
         child: Column(
           children: [
-            context.g8,
+            context.g16,
             Row(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.refresh)),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                    Get.toNamed(Routes.ADD_MOD_ORDER, arguments: orderModel);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: context.secondaryTextColor.withAlpha(50),
+                      ),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Row(
+                      children: [
+                        context.g16,
+                        Text(
+                          'طلب تعديل',
+                          style: context.bodySmall,
+                        ),
+                        SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: Icon(
+                            Icons.refresh,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Spacer(),
                 OrderTypeWidget(
                   status: OrderStatus.getStatus(orderModel.orderStatus).name,
@@ -46,8 +79,8 @@ class OrderDetailsSheet extends StatelessWidget {
                 ),
               ],
             ),
-            ThinDividerWidget(),
-            context.g4,
+            // ThinDividerWidget(),
+            context.g16,
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

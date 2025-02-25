@@ -21,8 +21,19 @@ class _OrderAudioFileWidgetState extends State<OrderAudioFileWidget> {
 
   HomeController homeController = Get.find();
   @override
+  @override
   void initState() {
     super.initState();
+
+    // Safely extract the audio link prefix
+    final homeData = homeController.homeData.value;
+    String audioLinkPrefix = '';
+
+    if (homeData != null && homeData.links.isNotEmpty) {
+      audioLinkPrefix = homeData.links.first.requestAudioLink;
+    }
+
+    // Create the product models using the safely obtained audioLinkPrefix
     audioController.setSession(null, [
       ProductModel(
         id: 1,
@@ -38,8 +49,7 @@ class _OrderAudioFileWidgetState extends State<OrderAudioFileWidget> {
         status: 1,
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
-        audioProduct:
-            "${homeController.homeData.value?.links.first.requestAudioLink}${widget.orderModel.audioAttachment}",
+        audioProduct: '$audioLinkPrefix${widget.orderModel.audioAttachment}',
       ),
       ProductModel(
         id: 2,
@@ -55,8 +65,7 @@ class _OrderAudioFileWidgetState extends State<OrderAudioFileWidget> {
         status: 1,
         createdAt: 'createdAt',
         updatedAt: 'updatedAt',
-        audioProduct:
-            "${homeController.homeData.value?.links.first.requestAudioLink}${widget.orderModel.audioClip}",
+        audioProduct: '$audioLinkPrefix${widget.orderModel.audioClip}',
       ),
     ]);
   }
@@ -77,7 +86,8 @@ class _OrderAudioFileWidgetState extends State<OrderAudioFileWidget> {
         Obx(
           () => Row(
             children: [
-              GestureDetector(
+              Expanded(
+                child: GestureDetector(
                   onTap: () {
                     if (audioController.isPlaying.value) {
                       audioController.pauseAudio();
@@ -97,12 +107,16 @@ class _OrderAudioFileWidgetState extends State<OrderAudioFileWidget> {
                       ),
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          widget.orderModel.audioAttachment,
-                          style: context.bodyLarge,
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            widget.orderModel.audioAttachment,
+                            style: context.bodyLarge,
+                          ),
                         ),
-                        context.g12,
+                        context.g8,
                         SizedBox(
                           // width: 50,
                           // height: 50,
@@ -116,7 +130,9 @@ class _OrderAudioFileWidgetState extends State<OrderAudioFileWidget> {
                         ),
                       ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
               context.g8,
               Expanded(
                 child: GestureDetector(

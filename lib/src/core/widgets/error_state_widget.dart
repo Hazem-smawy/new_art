@@ -12,7 +12,7 @@ class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({
     super.key,
     required this.onRetry,
-    this.errorMessage = 'حدث خطأ , تأكد من إتصالك ب الإنترنت!',
+    this.errorMessage = 'واجهنا مشكلة، يرجى التحقق من اتصالك بالإنترنت!',
     this.imageAsset =
         'assets/images/error.png', // تأكد من وجود هذا المسار في pubspec.yaml
   });
@@ -42,6 +42,7 @@ class ErrorStateWidget extends StatelessWidget {
             Text(
               errorMessage,
               style: context.titleMedium,
+              textDirection: TextDirection.rtl,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -49,7 +50,7 @@ class ErrorStateWidget extends StatelessWidget {
             ElevatedButtonExtension.error(
               label: 'إعادة المحاولة',
               onPressed: onRetry,
-            ).ph(16)
+            ).ph(32)
           ],
         ),
       ),

@@ -9,7 +9,7 @@ import 'package:newart/src/core/widgets/error_state_widget.dart';
 import 'package:newart/src/core/widgets/header_widget.dart';
 import 'package:newart/src/features/exclusive/presentation/getX/exclusive_controller.dart';
 import 'package:newart/src/features/exclusive/presentation/widgets/empty_widget.dart';
-import 'package:newart/src/features/exclusive/presentation/widgets/widgets.dart';
+import 'package:newart/src/features/exclusive/presentation/widgets/exclusive_widget.dart';
 
 import '../../../audio_player/presentation/getX/audio_player_controller.dart';
 

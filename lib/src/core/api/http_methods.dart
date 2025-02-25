@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:newart/src/core/error/error.dart';
 
 import 'package:newart/src/core/utils/check_internet.dart';
+import 'package:newart/src/features/order/data/models/new_order_mod_model.dart';
 import 'package:newart/src/features/order/data/models/transfer_model.dart';
 
 import '../../features/order/data/models/new_order_request_model.dart';
@@ -190,103 +191,82 @@ class HttpMethons {
     }
   }
 
-  // Future<Map<String, dynamic>> postOrderFile(
-  //   String linkurl,
-  //   NewOrderRequestModel newOrderRequest,
-  // ) async {
-  //   try {
-  //     // Replace 'token' with your actual token variable
-  //     Map<String, String> headers = {"Authorization": "Bearer $token"};
-  //     if (await checkInternet()) {
-  //       // Create the multipart request
-  //       final request = http.MultipartRequest('POST', Uri.parse(linkurl));
-
-  //       // Add the audio file part using the path from the model
-  //       request.files.add(
-  //         await http.MultipartFile.fromPath(
-  //           'audio_clip', // key expected by the API
-  //           newOrderRequest.audioClip.path,
-  //         ),
-  //       );
-  //       request.files.add(
-  //         await http.MultipartFile.fromPath(
-  //           'audio_attachment', // key expected by the API
-  //           newOrderRequest.audioAttachment.path,
-  //         ),
-  //       );
-  //       print("headers: $headers");
-
-  //       // Convert the model to a map and remove the audio file key
-  //       final requestData = newOrderRequest.toJson();
-  //       requestData.remove('audio_clip');
-  //       requestData.remove('audio_attachment');
-  //       // Add remaining fields to the request (convert values to strings)
-  //       request.fields.addAll(
-  //         requestData.map((key, value) => MapEntry(key, value.toString())),
-  //       );
-
-  //       // Add the necessary headers
-  //       request.headers.addAll(headers);
-
-  //       // Send the request and wait for the response
-  //       final response = await request.send();
-  //       final responseBody = await response.stream.bytesToString();
-  //       final orderResponse = jsonDecode(responseBody);
-
-  //       print(orderResponse);
-
-  //       if (orderResponse['status'] == 'error') {
-  //         throw ServerException(message: orderResponse['message']);
-  //       }
-  //       // Handle the response based on the status code
-  //       if (response.statusCode == 200 || response.statusCode == 201) {
-  //         return orderResponse;
-  //       } else if (response.statusCode == 302) {
-  //         throw NeedLoginException();
-  //       } else {
-  //         throw ServerException();
-  //       }
-  //     } else {
-  //       throw OfflineException();
-  //     }
-  //   } catch (error, stackTrace) {
-  //     print("Error in postOrderFile: $error");
-  //     print("Stack trace: $stackTrace");
-  //     rethrow; // Rethrow the error after logging it
-  //   }
-  // }
-
-  Future<Either<StatusRequest, Map>> postModificationOrderOrderFile(
+  Future<Map<String, dynamic>> postOrderModFile(
     String linkurl,
-    Map<String, dynamic> data,
-    File audioFile,
+    NewOrderModModel newOrderRequest,
   ) async {
-    Map<String, String> mapToken = {"Authorization": "Bearer $token"};
+    // Replace 'token' with your actual token variable
+    Map<String, String> headers = {"Authorization": "Bearer $token"};
+    const int maxFileSize = 10 * 1024 * 1024; // 10 MB in bytes
 
     if (await checkInternet()) {
-      var request = http.MultipartRequest('POST', Uri.parse(linkurl));
+      // Create the multipart request
+      final request = http.MultipartRequest('POST', Uri.parse(linkurl));
 
-      request.files.add(
-          await http.MultipartFile.fromPath('audio_material', audioFile.path));
+      // Add the audio file part using the path from the model with file size check
+      if (newOrderRequest.audioClip?.path != null) {
+        final audioClipFile = File(newOrderRequest.audioClip!.path);
+        final audioClipSize = await audioClipFile.length();
+        if (audioClipSize > maxFileSize) {
+          throw ServerException(
+              message:
+                  "حجم ملف audio clip يتجاوز الحد المسموح به وهو 10 ميجابايت.");
+        }
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'audio_material', // key expected by the API
+            newOrderRequest.audioClip!.path,
+          ),
+        );
+      }
 
-      request.fields
-          .addAll(data.map((key, value) => MapEntry(key, value.toString())));
+      if (newOrderRequest.audioAttachment?.path != null) {
+        final audioAttachmentFile = File(newOrderRequest.audioAttachment!.path);
+        final audioAttachmentSize = await audioAttachmentFile.length();
+        if (audioAttachmentSize > maxFileSize) {
+          throw ServerException(
+              message:
+                  "حجم ملف audio clip يتجاوز الحد المسموح به وهو 10 ميجابايت.");
+        }
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'audio_attachment', // key expected by the API
+            newOrderRequest.audioAttachment!.path,
+          ),
+        );
+      }
 
-      request.headers.addAll(mapToken);
+      // Convert the model to a map and remove the audio file keys
+      final requestData = newOrderRequest.toJson();
+      requestData.remove('audio_clip');
+      requestData.remove('audio_attachment');
 
-      var response = await request.send();
+      // Add remaining fields to the request (convert values to strings)
+      request.fields.addAll(
+        requestData.map((key, value) => MapEntry(key, value.toString())),
+      );
 
+      // Add the necessary headers
+      request.headers.addAll(headers);
+
+      // Send the request and wait for the response
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString();
+      final orderResponse = jsonDecode(responseBody);
+
+      if (orderResponse['status'] == 'error') {
+        throw ServerException(message: orderResponse['message']);
+      }
+      // Handle the response based on the status code
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var responseBody = await response.stream.bytesToString();
-        var responseJson = jsonDecode(responseBody);
-        return Right(responseJson);
+        return orderResponse;
       } else if (response.statusCode == 302) {
-        return const Left(StatusRequest.needLogin);
+        throw NeedLoginException();
       } else {
-        return const Left(StatusRequest.serverfailure);
+        throw ServerException();
       }
     } else {
-      return const Left(StatusRequest.offlinefailure);
+      throw OfflineException();
     }
   }
 

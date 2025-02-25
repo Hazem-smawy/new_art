@@ -9,6 +9,7 @@ import 'package:newart/src/features/bunch/presentation/pages/bunch_page.dart';
 import 'package:newart/src/features/chat/presentation/pages/chat_page.dart';
 import 'package:newart/src/features/home/presentation/pages/main_page.dart';
 import 'package:newart/src/features/order/presentation/getX/order_binding.dart';
+import 'package:newart/src/features/order/presentation/pages/add_mod_order_page.dart';
 import 'package:newart/src/features/order/presentation/pages/add_order_page.dart';
 import 'package:newart/src/features/order/presentation/pages/track_order_page.dart';
 import 'package:newart/src/features/points/presentation/pages/points_page.dart';
@@ -58,10 +59,10 @@ class AppPages {
       binding: ProductBinding(),
     ),
 
-    // GetPage(
-    //   name: Routes.SHOPPING_CART,
-    //   page: () => const ShoppingCartPage(),
-    // ),
+    GetPage(
+      name: Routes.ADD_MOD_ORDER,
+      page: () => const AddModOrderPage(),
+    ),
     GetPage(
       name: Routes.ALL_ARTISTS,
       page: () => const AllArtistPage(),
